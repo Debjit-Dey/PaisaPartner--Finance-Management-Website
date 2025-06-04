@@ -96,7 +96,7 @@ const SignUpForm = () => {
         </p>
 
         <form onSubmit={handleSignUp}>
-          <div className="hidden">
+          <div className="flex justify-center mb-6 ">
             <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
           </div>
 
