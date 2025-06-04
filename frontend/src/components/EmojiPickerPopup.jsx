@@ -6,7 +6,7 @@ const EmojiPickerPopup = ({ icon, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex flex-col md:flex-row items-start gap-5 mb-6">
+    <div className="flex flex-col md:flex-row items-start gap-5 mb-6 bg-blue-100">
       <div
         className="flex items-center gap-4 cursor-pointer"
         onClick={() => setIsOpen(true)}
@@ -30,7 +30,7 @@ const EmojiPickerPopup = ({ icon, onSelect }) => {
           >
             <LuX />
           </button>
-          
+
           <EmojiPicker
             open={isOpen}
             onEmojiClick={(emoji) => onSelect(emoji?.imageUrl || "")}
