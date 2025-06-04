@@ -20,6 +20,7 @@ const SideMenu = ({ activeMenu }) => {
     localStorage.clear();
     clearUser();
     navigate("/login");
+    window.location.reload();
   };
 
   return (
