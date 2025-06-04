@@ -28,6 +28,10 @@ const SignUpForm = () => {
       setError("Please enter your name");
       return;
     }
+    if (!isNaN(fullName)) {
+      setError("Name cannot be a number");
+      return;
+    }
 
     if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
