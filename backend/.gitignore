@@ -1,0 +1,39 @@
+# Node.js dependencies
+node_modules/
+node_modules
+.env
+**/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+**/.env
+
+# Build outputs
+/dist
+/build
+/frontend/build
+/backend/build
+
+# IDE and editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+coverage/
+.cache/
+*.tgz
