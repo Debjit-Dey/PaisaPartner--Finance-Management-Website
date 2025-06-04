@@ -14,7 +14,7 @@ const AuthLayout = ({ children }) => {
           "linear-gradient(120deg, #E3F2FD 0%, #BBDEFB 60%, #90CAF9 100%)",
       }}
     >
-      <div className="w-screen h-screen  md:w-[60vw] flex flex-col items-center justify-center px-4 md:px-12 pb-12 relative">
+      <div className="w-screen min-h-screen md:w-[60vw] flex flex-col items-center justify-center px-4 md:px-12 pb-12 relative">
         {/* Decorative blurred circle */}
         <div className="absolute top-10 left-10 w-40 h-40 bg-blue-100 rounded-full blur-2xl opacity-60 -z-10" />
         <h2 className="mt-6 mb-2 tracking-tight">
