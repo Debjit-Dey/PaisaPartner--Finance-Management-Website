@@ -9,6 +9,9 @@ const expenseRoutes = require("./routes/expenseRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 
 const app = express();
+// 🟢 Import and start the cron job
+const cronJob = require("./lib/cron");
+cronJob.start(); // 🚀 starts the cron job
 
 // Middleware to handle CORS
 app.use(
@@ -28,6 +31,11 @@ app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 
+//cron route
+app.get("/ping", (req, res) => {
+  res.sendStatus(200);
+});
+
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -35,7 +43,6 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.get("/", (req, res) => {
   res.send("🚀 Backend is working!");
 });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
