@@ -1,5 +1,4 @@
-export const BASE_URL =
-  "https://paisapartner-finance-management-website.onrender.com";
+export const BASE_URL = "https://paisa-partner-backend.vercel.app/";
 
 // utils/apiPaths.js
 export const API_PATHS = {
