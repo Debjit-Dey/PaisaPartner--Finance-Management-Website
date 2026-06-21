@@ -1,5 +1,9 @@
 import React, { useRef, useState } from "react";
 import { LuUser, LuUpload, LuTrash } from "react-icons/lu";
+import toast from "react-hot-toast";
+
+const MAX_FILE_SIZE_MB = 2;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 const ProfilePhotoSelector = ({ image, setImage }) => {
   const inputRef = useRef(null);
@@ -7,19 +11,25 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      // Update the image state
-      setImage(file);
+    if (!file) return;
 
-      // Generate preview URL from the file
-      const preview = URL.createObjectURL(file);
-      setPreviewUrl(preview);
+    // Validate size BEFORE updating any state — gives instant feedback
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      toast.error(`Image too large. Please choose an image under ${MAX_FILE_SIZE_MB}MB.`);
+      // Reset the file input so the user can pick again
+      event.target.value = "";
+      return;
     }
+
+    setImage(file);
+    setPreviewUrl(URL.createObjectURL(file));
   };
 
   const handleRemoveImage = () => {
     setImage(null);
     setPreviewUrl(null);
+    // Also reset the hidden input so the same file can be re-selected
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   const onChooseFile = () => {
@@ -30,7 +40,7 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
     <div className="flex justify-center mb-6">
       <input
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/jpg,image/png"
         ref={inputRef}
         onChange={handleImageChange}
         className="hidden"

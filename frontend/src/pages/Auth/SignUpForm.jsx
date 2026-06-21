@@ -8,6 +8,7 @@ import { API_PATHS } from "../../utils/apiPaths";
 import uploadImage from "../../utils/uploadImage";
 import { UserContext } from "../../context/UserContext";
 import axiosInstance from "../../utils/axiosInstance";
+import toast from "react-hot-toast";
 
 const SignUpForm = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -26,21 +27,35 @@ const SignUpForm = () => {
 
     if (!fullName) {
       setError("Please enter your name");
+      toast.error("Please enter your name");
       return;
     }
     if (!isNaN(fullName)) {
       setError("Name cannot be a number");
+      toast.error("Name cannot be a number");
       return;
     }
 
     if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return;
     }
 
     if (!password) {
       setError("Please enter the password");
+      toast.error("Please enter the password");
       return;
+    }
+    
+
+    if (profilePic) {
+      const maxFileSize = 2 * 1024 * 1024; // 2MB
+      if (profilePic.size > maxFileSize) {
+        setError("Profile photo size must be less than 2MB");
+        toast.error("Profile photo size must be less than 2MB");
+        return;
+      }
     }
 
     setError("");
@@ -63,14 +78,18 @@ const SignUpForm = () => {
       if (token) {
         localStorage.setItem("token", token);
         updateUser(user);
+        toast.success("Account created successfully!");
         navigate("/dashboard");
       }
     } catch (error) {
-      if (error.response && error.response.data.message) {
-        setError(error.response.data.message);
-      } else {
-        setError("Something went wrong. Please try again.");
-      }
+      // error.message is pre-populated by uploadImage() with the exact server reason.
+      // For the register API call, fall back to response body then a generic message.
+      const errorMsg =
+        error.message && error.message !== 'Network Error'
+          ? error.message
+          : error.response?.data?.message || 'Something went wrong. Please try again.';
+      setError(errorMsg);
+      toast.error(errorMsg);
     }
   };
 
